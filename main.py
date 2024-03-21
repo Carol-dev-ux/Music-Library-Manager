@@ -1,4 +1,3 @@
-# main.py
 from cli import cli
 from database import init_db
 
