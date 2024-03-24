@@ -15,7 +15,7 @@ class Album(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String)
     artist_id = Column(Integer, ForeignKey('artists.id'))
-    artist = relationship('Artist', backref='albums', cascade='all, delete-orphan')
+    artist = relationship('Artist', backref='albums', cascade='all, delete')
 
 class Song(Base):
     __tablename__ = 'songs'
@@ -25,5 +25,7 @@ class Song(Base):
     release_year = Column(Integer)
     duration = Column(Integer)
     album_id = Column(Integer, ForeignKey('albums.id'))
-    album = relationship('Album', backref='songs', cascade='all, delete-orphan')
+    album = relationship('Album', backref='songs', cascade='all, delete')
+
+
 
