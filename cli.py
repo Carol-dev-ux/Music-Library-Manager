@@ -2,10 +2,25 @@ import click
 from database import session, init_db
 from models import Artist, Album, Song
 
-
 @click.group()
 def cli():
-    pass
+    pass  
+
+@cli.command()
+def show_songs():
+    songs = session.query(Song).all()
+    if songs:
+        click.echo("********** All Songs **********")
+        for song in songs:
+            click.echo(f"Title: {song.title}")
+            click.echo(f"Artist: {song.album.artist.name}")
+            click.echo(f"Album: {song.album.title}")
+            click.echo(f"Genre: {song.genre}")
+            click.echo(f"Release Year: {song.release_year}")
+            click.echo(f"Duration: {song.duration} seconds")
+            click.echo("--------------------------------")
+    else:
+        click.echo("No songs found.")
 
 @cli.command()
 @click.option('--title', prompt='Title', help='Title of the song')
@@ -61,8 +76,24 @@ def delete_music(title):
         session.commit()
         click.echo('Music deleted successfully.')
     else:
-        click.echo(f'Music with title {title} not found.')
+        click.echo(f'Music with title {title} not found.') 
+
+@cli.command()
+@click.option('--title', prompt='Enter the title of the music you want to check', help='Title of the music')
+def check_song(title):
+    song = session.query(Song).filter_by(title=title).first()
+    if song:
+        click.echo(f"Title: {song.title}")
+        click.echo(f"Artist: {song.album.artist.name}")
+        click.echo(f"Album: {song.album.title}")
+        click.echo(f"Genre: {song.genre}")
+        click.echo(f"Release Year: {song.release_year}")
+        click.echo(f"Duration: {song.duration} seconds")
+    else:
+        click.echo(f'Music with title {title} not found.')    
+          
 
 if __name__ == "__main__":
-    init_db() 
+    init_db()
     cli()
+  
