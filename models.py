@@ -1,4 +1,3 @@
-# models.py
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
@@ -26,6 +25,5 @@ class Song(Base):
     duration = Column(Integer)
     album_id = Column(Integer, ForeignKey('albums.id'))
     album = relationship('Album', backref='songs', cascade='all, delete')
-
 
 
