@@ -1,6 +1,7 @@
+# models.py
 from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
@@ -9,16 +10,12 @@ class Artist(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
-    albums = relationship("Album", back_populates="artist")
-
 class Album(Base):
     __tablename__ = 'albums'
     id = Column(Integer, primary_key=True)
     title = Column(String)
     artist_id = Column(Integer, ForeignKey('artists.id'))
-
-    artist = relationship("Artist", back_populates="albums")
-    songs = relationship("Song", back_populates="album")
+    artist = relationship('Artist', backref='albums', cascade='all, delete-orphan')
 
 class Song(Base):
     __tablename__ = 'songs'
@@ -28,5 +25,5 @@ class Song(Base):
     release_year = Column(Integer)
     duration = Column(Integer)
     album_id = Column(Integer, ForeignKey('albums.id'))
+    album = relationship('Album', backref='songs', cascade='all, delete-orphan')
 
-    album = relationship("Album", back_populates="songs")
