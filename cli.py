@@ -12,15 +12,19 @@ def show_songs():
     if songs:
         click.echo("********** All Songs **********")
         for song in songs:
-            click.echo(f"Title: {song.title}")
-            click.echo(f"Artist: {song.album.artist.name}")
-            click.echo(f"Album: {song.album.title}")
-            click.echo(f"Genre: {song.genre}")
-            click.echo(f"Release Year: {song.release_year}")
-            click.echo(f"Duration: {song.duration} seconds")
-            click.echo("--------------------------------")
+            if song.album and song.album.artist:
+                click.echo(f"Title: {song.title}")
+                click.echo(f"Artist: {song.album.artist.name}")
+                click.echo(f"Album: {song.album.title}")
+                click.echo(f"Genre: {song.genre}")
+                click.echo(f"Release Year: {song.release_year}")
+                click.echo(f"Duration: {song.duration} seconds")
+                click.echo("--------------------------------")
+            else:
+                click.echo(f"Song '{song.title}' has missing album or artist information.")
     else:
         click.echo("No songs found.")
+
 
 @cli.command()
 @click.option('--title', prompt='Title', help='Title of the song')
