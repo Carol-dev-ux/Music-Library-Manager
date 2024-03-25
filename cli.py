@@ -80,7 +80,7 @@ def delete_music(title):
         session.commit()
         click.echo('Music deleted successfully.')
     else:
-        click.echo(f'Music with title {title} not found.') 
+        click.echo(f'Music with title {title} not found.')  
 
 @cli.command()
 @click.option('--title', prompt='Enter the title of the music you want to check', help='Title of the music')
