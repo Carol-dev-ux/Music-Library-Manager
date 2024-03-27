@@ -25,7 +25,6 @@ def show_songs():
     else:
         click.echo("No songs found.")
 
-
 @cli.command()
 @click.option('--title', prompt='Title', help='Title of the song')
 @click.option('--artist', prompt='Artist', help='Name of the artist')
@@ -95,9 +94,37 @@ def check_song(title):
         click.echo(f"Duration: {song.duration} seconds")
     else:
         click.echo(f'Music with title {title} not found.')    
-          
+
+def prompt_user():
+    continue_prompt = True
+    while continue_prompt:
+        action = click.prompt(
+            'Choose an option:\n'
+            '(1) Show Songs\n'
+            '(2) Add Music\n'
+            '(3) Edit Music\n'
+            '(4) Delete Music\n'
+            '(5) Check Song\n'
+            '(6) Exit\n',
+            type=int
+        )
+
+        if action == 1:
+            show_songs()
+        elif action == 2:
+            add_music()
+        elif action == 3:
+            edit_music()
+        elif action == 4:
+            delete_music()
+        elif action == 5:
+            check_song()
+        elif action == 6:
+            continue_prompt = False
 
 if __name__ == "__main__":
     init_db()
-    cli()
-  
+    prompt_user()
+
+
+
